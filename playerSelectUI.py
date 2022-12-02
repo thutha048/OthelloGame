@@ -8,7 +8,7 @@ class PlayerSelectUi(Frame):
 
 # Set up the UI that allows player to select difficulty of opponent
 # start_new_game is a function passed from Controller
-    def __init__(self, start_new_game, start_game):
+    def __init__(self, restart_game, start_game):
         #constructor
         super().__init__()
         self.selection1 = [None] * 5
@@ -57,12 +57,12 @@ class PlayerSelectUi(Frame):
         #self.menuGame.add_command(label = 'New Game ', command = self._new_game)
         ##
         self.startGameButton = Button(self, text = "Restart", font=FONT)
-        self.startGameButton.grid(row = 2, column = 0,sticky=(N, S, E, W))
+        self.startGameButton.grid(row = 2, column = 1,sticky=(N, S, E, W))
         self.startGameButton.configure(
-            command = lambda: start_new_game())
+            command = lambda: restart_game())
 
         self.startGameButton = Button(self, text = "Start ", font=FONT)
-        self.startGameButton.grid(row = 2, column = 1)
+        self.startGameButton.grid(row = 2, column = 0,sticky=(N, S, E, W))
         self.startGameButton.configure(
             command = lambda: start_game(self.selectedP1, self.selectedP2))
 
@@ -72,7 +72,7 @@ class PlayerSelectUi(Frame):
          #   command = lambda: start_new_game(self.selectedP1, self.selectedP2))
 
 # Select difficulty of player1. Can set as AI or human player. 
-# x 0 = easy, 1 = normal, 2 = hard, 3 = human
+# x 0 = easy, 1 = normal, 2 = hard, 3 = minimax, 4 = human
     def clickP1(self, x):
         self.selectedP1 = x
         for b in range(len(self.selection1)):
@@ -89,3 +89,16 @@ class PlayerSelectUi(Frame):
                 self.selection2[b].configure(relief =SUNKEN)
             else:
                 self.selection2[b].configure(relief=RAISED)
+    '''
+    def reset_click(self):
+        for a in range(len(self.selection1)):
+            if a == 4:
+                self.selection1[a].configure(relief =SUNKEN)
+            else:
+                self.selection1[a].configure(relief=RAISED)
+        for b in range(len(self.selection2)):
+            if b == 4:
+                self.selection2[b].configure(relief =SUNKEN)
+            else:
+                self.selection2[b].configure(relief=RAISED)
+    '''

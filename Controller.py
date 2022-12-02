@@ -1,4 +1,5 @@
 from Ai import Ai
+from ScoreFrame import ScoreFrame
 class Controller(object):
 
 # Set up a 8x8 board of zeroes (empty spots) ones(black bricks) and twos (white bricks)
@@ -7,11 +8,14 @@ class Controller(object):
         self.empty = 0
         self.player = 1
         self.opponent = 2
-        self.ais = [None, None]       
+        self.ais = [None, None]  
         self.buttons = [[0 for _ in range(8)]for _ in range(8)]
         self.reset_board()
 
     def reset_board(self):
+        self.whiteCount = 2
+        self.blackCount = 2
+        self.emptyCount = 60
         for x in range(8):
             for y in range(8):
                 self.buttons[x][y] = 0
@@ -19,18 +23,19 @@ class Controller(object):
         self.buttons[4][4] = 2
         self.buttons[3][4] = 1
         self.buttons[4][3] = 1
-        self.whiteCount = 2
-        self.blackCount = 2
-        self.emptyCount = 60
         self.player = 1
         self.opponent = 2
 
     # Reset the board to starting positions. 
     #Set AIs as selected by the player in playerSelectUI. Start the first move    
     # p1 and p2 are ints
-    def start_new_game(self):
+    def restart_game(self):
         self.reset_board()
         self.game.reset_board()
+        self.ais = [None, None]    
+        self.update_texts(2, 2, 60)
+        self.update_status("First turn: black player")
+        #self.reset_click()
         ##self.ais= [self.get_AI_level_or_human(p1), self.get_AI_level_or_human(p2)]
         #self.update_status("First turn: player "+ self.first_player())
         ##self.next_move()
@@ -42,6 +47,7 @@ class Controller(object):
         self.ais= [self.get_AI_level_or_human(p1), self.get_AI_level_or_human(p2)]
         #self.update_status("First turn: player "+ self.first_player())
         self.next_move()
+
 
       # 0 returns easiest AI, 1 normal AI, 2 hard AI, 3 minimax AI
     # 4 returns None which sets player as human
@@ -97,18 +103,14 @@ class Controller(object):
         toTurn = self.check_if_legal(x,y)
         if len(toTurn) > 0:
             self.perform_move(toTurn)
-        else: self.update_status(
-            "That's not a legal move, try again. Turn : " + self.get_player_color()+ " player")
+        else: self.update_status("That's not a legal move, try again. Turn : " + self.get_player_color()+ " player")
 
     # check if current player is white or black
     def get_player_color(self):
         if self.player == 2:
             return "white"
         else: return "black"
-
-
     
-
     # If current player is black, change to white. Else change to black.
     def switch_player(self):
         self.opponent = self.player
@@ -200,6 +202,9 @@ class Controller(object):
 
     def update_status(self, text):
         self.game.scoreFrame.update_status(text)
+    
+    def update_texts(self, white,black, empty):
+        self.game.scoreFrame.update_texts(white,black,empty)
 
     def get_winner(self):
         if self.whiteCount > self.blackCount:
@@ -207,3 +212,6 @@ class Controller(object):
         if self.blackCount > self.whiteCount:
             return "Black player wins!"
         return "The game ends in a tie"
+
+    #def reset_click(self):
+    #    self.game.playerSelect.reset_click()

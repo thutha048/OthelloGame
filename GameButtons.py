@@ -10,7 +10,6 @@ class GameButtons(Frame):
                 b = GameButton(self, 0)
                 b.grid(row = x, column = y,sticky=(N, S, E, W))
                 b.configure( command = lambda row = x, col = y: click(row, col)) #add text = "%s%s"%(x,y) if want present index of btn
-                
                 self.buttons[x][y] = b
                 self.columnconfigure(y, weight = 1)
             self.rowconfigure(x, weight = 1)

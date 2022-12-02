@@ -13,7 +13,6 @@ class ScoreFrame(Frame):
         Constructor
         Set up StringVars and add them to the labels
         '''
-
         super().__init__()
         self.whiteTextVar = StringVar()
         self.blackTextVar = StringVar()
@@ -34,10 +33,6 @@ class ScoreFrame(Frame):
         self.status_text.set("")
         self.status_bar = Label(self, textvariable = self.status_text, width=3, font=FONT)
         self.status_bar.grid(row = 1, column = 0, columnspan = 3, sticky=(E,W))
-
-       
-
-
 
     # Change the textVariables to update the text.
     def update_texts(self, white, black, empty):

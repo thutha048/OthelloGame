@@ -1,7 +1,7 @@
 from GameButtons import GameButtons
 from tkinter import Tk, Frame, BOTH, X
 from ScoreFrame import ScoreFrame
-from playerSelectUI import PlayerSelectUi
+from PlayerSelectUI import PlayerSelectUi
 #from Controller import Controller
 from tkinter import E, W, N, S, Frame, PhotoImage
 from GameButton import GameButton
@@ -11,7 +11,7 @@ import tkinter
 class GameFrame(Frame):
 # Main UI frame. Starts a Tk() and adds other frames to it.
 
-    def __init__(self, params, click, start_new_game, start_game):
+    def __init__(self, params, click, restart_game, start_game):
         self.root = Tk()
         self.root.geometry("600x750")
        # self.root = tkinter.Canvas(master)
@@ -21,7 +21,7 @@ class GameFrame(Frame):
         self.update_status("First turn: black player")
         self.buttons = GameButtons(click)
         self.buttons.pack(fill=BOTH, expand=1)
-        self.playerSelect = PlayerSelectUi(start_new_game,start_game)
+        self.playerSelect = PlayerSelectUi(restart_game,start_game)
         self.playerSelect.pack(fill = BOTH)
       
 
