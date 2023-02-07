@@ -1,7 +1,6 @@
 from tkinter import E, W, N, S, Frame, PhotoImage
 from GameButton import GameButton
 class GameButtons(Frame):
-# Create a frame with the buttons for the game, is used by GameFrame
     def __init__(self, click):
         super().__init__()
         self.buttons = [[0 for _ in range(8)]for _ in range(8)]
@@ -31,5 +30,6 @@ class GameButtons(Frame):
         self.buttons[4][3].configure(bg = "black")
         self.buttons[3][4].configure(bg = "black")
 
-
+    def get_board(self):
+        return self.buttons
     

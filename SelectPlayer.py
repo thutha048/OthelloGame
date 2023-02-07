@@ -2,7 +2,7 @@ from tkinter import Frame, Label, Button, SUNKEN, RAISED, N, S, E, W
 FONT = ('Helvetica', 15)
 
 
-class PlayerSelectUi(Frame):
+class SelectPlayer(Frame):
 #Set up a frame where the user can select AI / Human controller for each of the players
 #Class used by and added to GameFrame
 
@@ -27,7 +27,7 @@ class PlayerSelectUi(Frame):
         self.selection1[2] = self.player1SelectButton3 = Button(self,bd=3, text = "Hard", fg="red", font=FONT)
         self.player1SelectButton3.grid(row = 0, column = 3,sticky=(N, S, E, W))
         self.player1SelectButton3.configure( command = lambda: self.clickP1(2))
-        self.selection1[3] = self.player1SelectButton4 = Button(self,bd=3, text = "MiniMax", fg="deeppink", font=FONT)
+        self.selection1[3] = self.player1SelectButton4 = Button(self,bd=3, text = "Superhard", fg="deeppink", font=FONT)
         self.player1SelectButton4.grid(row = 0, column = 4,sticky=(N, S, E, W))
         self.player1SelectButton4.configure( command = lambda: self.clickP1(3))
         self.selection1[4] = self.player1SelectButton5 = Button(self,bd=3, text = "Human", font=FONT)
@@ -45,7 +45,7 @@ class PlayerSelectUi(Frame):
         self.selection2[2] = self.player2SelectButton3 = Button(self,bd=3, text = "Hard", fg="red", font=FONT)
         self.player2SelectButton3.grid(row = 1, column = 3,sticky=(N, S, E, W))
         self.player2SelectButton3.configure(command = lambda: self.clickP2(2))
-        self.selection2[3] = self.player2SelectButton4 = Button(self,bd=3, text = "MiniMax", fg="deeppink", font=FONT)
+        self.selection2[3] = self.player2SelectButton4 = Button(self,bd=3, text = "Superhard", fg="deeppink", font=FONT)
         self.player2SelectButton4.grid(row = 1, column = 4,sticky=(N, S, E, W))
         self.player2SelectButton4.configure( command = lambda: self.clickP2(3))
         self.selection2[4] = self.player2SelectButton5 = Button(self,bd=3, text = "Human", font=FONT)
@@ -56,15 +56,19 @@ class PlayerSelectUi(Frame):
         #self.menuGame = tkinter.Menu(self,tearoff=0)
         #self.menuGame.add_command(label = 'New Game ', command = self._new_game)
         ##
+        
+
         self.startGameButton = Button(self, text = "Restart", font=FONT)
         self.startGameButton.grid(row = 2, column = 1,sticky=(N, S, E, W))
         self.startGameButton.configure(
             command = lambda: restart_game())
-
+        
         self.startGameButton = Button(self, text = "Start ", font=FONT)
         self.startGameButton.grid(row = 2, column = 0,sticky=(N, S, E, W))
         self.startGameButton.configure(
             command = lambda: start_game(self.selectedP1, self.selectedP2))
+
+        
 
         #self.reGameButton = Button(self, text = "Restart", font=FONT)
         #self.reGameButton.grid(row = 2, column = 1)

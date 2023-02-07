@@ -1,14 +1,15 @@
 from Ai import Ai
-from ScoreFrame import ScoreFrame
+import time
 class Controller(object):
 
 # Set up a 8x8 board of zeroes (empty spots) ones(black bricks) and twos (white bricks)
 # AIs set to None (Human controllers) at start
     def __init__(self):
+        self.t0= time.process_time()
         self.empty = 0
         self.player = 1
         self.opponent = 2
-        self.ais = [None, None]  
+        self.ais = [ None, None]  
         self.buttons = [[0 for _ in range(8)]for _ in range(8)]
         self.reset_board()
 
@@ -27,29 +28,23 @@ class Controller(object):
         self.opponent = 2
 
     # Reset the board to starting positions. 
-    #Set AIs as selected by the player in playerSelectUI. Start the first move    
+    #Set AIs as selected by the player in SelectPlayer. Start the first move    
     # p1 and p2 are ints
+
     def restart_game(self):
         self.reset_board()
         self.game.reset_board()
-        self.ais = [None, None]    
         self.update_texts(2, 2, 60)
         self.update_status("First turn: black player")
-        #self.reset_click()
-        ##self.ais= [self.get_AI_level_or_human(p1), self.get_AI_level_or_human(p2)]
-        #self.update_status("First turn: player "+ self.first_player())
-        ##self.next_move()
-    # 0 returns easiest AI, 1 normal AI, 2 hard AI.
-    # 3 returns None which sets player as human
-    # x is an int
 
+    # 0 returns easiest AI, 1 normal AI, 2 hard AI, 3 minimax
+    # 4 returns None which sets player as human
+    # x is an int
     def start_game(self,p1,p2):
         self.ais= [self.get_AI_level_or_human(p1), self.get_AI_level_or_human(p2)]
-        #self.update_status("First turn: player "+ self.first_player())
         self.next_move()
 
-
-      # 0 returns easiest AI, 1 normal AI, 2 hard AI, 3 minimax AI
+    # 0 returns easiest AI, 1 normal AI, 2 hard AI, 3 minimax AI
     # 4 returns None which sets player as human
     # x is an int
     def get_AI_level_or_human(self, x):
@@ -79,7 +74,9 @@ class Controller(object):
     # Get all legal moves and have the AI determine which move to make
     # Flip those bricks
     def ai_move(self):
-        toFlip = self.ais[self.player-1].make_move(self.find_all_legal_moves())
+        toFlip = self.ais[self.player-1].make_move(self.find_all_legal_moves(),self.buttons)
+        # timeRandom= self.ais[self.player-1].random_time(self.find_all_legal_moves())
+
         self.perform_move(toFlip)
 
     # Check every square on the board to see if a brick can be placed there.
@@ -197,9 +194,6 @@ class Controller(object):
                 if self.buttons[x+dirX*i][y+dirY*i] == self.player:
                     return toTurn
 
-    #def first_status(self,text):
-     #   self.game.scoreFrame.update_status(text)
-
     def update_status(self, text):
         self.game.scoreFrame.update_status(text)
     
@@ -207,11 +201,12 @@ class Controller(object):
         self.game.scoreFrame.update_texts(white,black,empty)
 
     def get_winner(self):
+        t1 = time.process_time()
+        print("Time elapsed: ", t1 - self.t0)
+
         if self.whiteCount > self.blackCount:
             return "White player wins!"
         if self.blackCount > self.whiteCount:
             return "Black player wins!"
-        return "The game ends in a tie"
-
-    #def reset_click(self):
-    #    self.game.playerSelect.reset_click()
+        else:
+            return "The game ends in a tie"
